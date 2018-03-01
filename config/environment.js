@@ -47,5 +47,16 @@ module.exports = function(environment) {
     // here you can enable a production-specific feature
   }
 
+  ENV.FB = {
+    appId: '169312520355618',
+    version: 'v2.12',
+    cookie: true,
+    xfbml: true
+  }
+  if (environment === 'development') {
+    ENV.host = 'http://www.bas_server.dev';
+  } else {
+    ENV.host = 'https://bas-server.herokuapp.com';
+  }
   return ENV;
 };
