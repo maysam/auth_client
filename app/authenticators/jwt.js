@@ -1,4 +1,4 @@
-import Ember from 'ember';
+// import Ember from 'ember';
 import Base from 'ember-simple-auth/authenticators/base';
 import config from '../config/environment';
 // const { RSVP: { Promise }, $: { ajax }, run } = Ember;
@@ -9,7 +9,6 @@ import { isEmpty } from '@ember/utils';
 import $ from 'jquery'
 
 export default Base.extend({
-  tokenEndpoint: `${config.host}/user_token`,
   restore(data) {
     window.console.log('restore: ', data)
     return new Promise((resolve, reject) => {
@@ -23,7 +22,7 @@ export default Base.extend({
   authenticateFB(creds) {
     const url = `${config.host}/fb_login`
     window.console.log('authenticate FB: ', creds)
-    const { accessToken, userID } = creds;
+    // const { accessToken, userID } = creds;
     const data = JSON.stringify({ auth: creds });
     const requestOptions = {
       url: url,
@@ -63,8 +62,9 @@ export default Base.extend({
         password
       }
     });
+    const tokenEndpoint = `${config.host}/user_token`;
     const requestOptions = {
-      url: this.tokenEndpoint,
+      url: tokenEndpoint,
       type: 'POST',
       data,
       contentType: 'application/json',

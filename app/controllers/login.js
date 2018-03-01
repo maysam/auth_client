@@ -22,7 +22,6 @@ export default Controller.extend({
 
       this.get('fb').getLoginStatus().then(function(response) {
         const authResponse = response.authResponse
-        window.console.log('status: ', response.status)
         switch(response.status) {
           case 'connected': {
             // the person is logged into Facebook, and has logged into your app
