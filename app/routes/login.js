@@ -6,7 +6,7 @@ export default Route.extend(UnauthenticatedRouteMixin, {
 
   beforeModel: function(){
     let controller = this.controllerFor(this.routeName);
-    controller.set('errorMessage', 'null')
+    controller.set('errorMessage', null)
   }
 
 });

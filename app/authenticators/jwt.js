@@ -10,7 +10,6 @@ import $ from 'jquery'
 
 export default Base.extend({
   restore(data) {
-    window.console.log('restore: ', data)
     return new Promise((resolve, reject) => {
       if (!isEmpty(data.token)) {
         resolve(data);
@@ -19,50 +18,21 @@ export default Base.extend({
       }
     });
   },
-  authenticateFB(creds) {
-    const url = `${config.host}/fb_login`
-    window.console.log('authenticate FB: ', creds)
-    // const { accessToken, userID } = creds;
-    const data = JSON.stringify({ auth: creds });
-    const requestOptions = {
-      url: url,
-      type: 'POST',
-      data,
-      contentType: 'application/json',
-      dataType: 'json'
-    };
-    return new Promise((resolve, reject) => {
-      $.ajax(requestOptions).then((response) => {
-        window.console.log('fb posting success', response)
-        const { jwt } = response;
-        window.console.log('fb jwt: ', jwt)
-        // Wrapping aync operation in Ember.run
-        run(() => {
-          resolve({
-            token: jwt
-          });
-        });
-      }, (error) => {
-        window.console.log('fb posting error', error)
-        // Wrapping aync operation in Ember.run
-        run(() => {
-          reject(error);
-        });
-      });
-    });
-  },
   authenticate(creds) {
-    if (creds.accessToken)
-      return this.authenticateFB(creds)
-    window.console.log('authenticate: ', creds)
     const { identification, password } = creds;
-    const data = JSON.stringify({
+    let data = JSON.stringify({
       auth: {
         email: identification,
         password
       }
     });
-    const tokenEndpoint = `${config.host}/user_token`;
+    let tokenEndpoint = `${config.host}/user_token`;
+    if (creds.accessToken) {
+      // fb login
+      tokenEndpoint = `${config.host}/fb_login`
+      data = JSON.stringify({ auth: creds });
+    }
+
     const requestOptions = {
       url: tokenEndpoint,
       type: 'POST',
@@ -72,9 +42,7 @@ export default Base.extend({
     };
     return new Promise((resolve, reject) => {
       $.ajax(requestOptions).then((response) => {
-        window.console.log('posting success', response)
         const { jwt } = response;
-        window.console.log('jwt: ', jwt)
         // Wrapping aync operation in Ember.run
         run(() => {
           resolve({
@@ -82,7 +50,6 @@ export default Base.extend({
           });
         });
       }, (error) => {
-        window.console.log('posting error', error)
         // Wrapping aync operation in Ember.run
         run(() => {
           reject(error);
@@ -91,7 +58,6 @@ export default Base.extend({
     });
   },
   invalidate(data) {
-    window.console.log('invalidate: ', data)
     return Promise.resolve(data);
   }
 });

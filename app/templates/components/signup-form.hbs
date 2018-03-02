@@ -3,11 +3,8 @@
 
 <form {{action "submit" on="submit"}}>
 
-  <label for="name">First Name</label>
-  {{input value=user.firstName placeholder="enter first name" class="form-control"}}
-
-   <label for="name">Last Name</label>
-  {{input value=user.lastName placeholder="enter last name" class="form-control"}}
+  <label for="name">Name</label>
+  {{input value=user.name placeholder="enter name" class="form-control"}}
 
   <label for="email">Email</label>
   {{input value=user.email placeholder="enter email" class="form-control"}}

@@ -1,11 +1,14 @@
 <div class="container">
 
-  <h1>Ember JWT Token Auth Example App</h1>
 
   {{#if session.isAuthenticated}}
-    <li><a href="#">Hi, {{sessionAccount.account.email}}</a></li>
+    <h1>Hi, {{sessionAccount.account.name}}</h1>
+
+    <li>Email: {{sessionAccount.account.email}}</li>
     <li><a href="#" {{action 'invalidateSession'}}>Logout</a></li>
   {{else}}
+    <h1>Emberjs Rails Authentication</h1>
+
     <li>{{#link-to 'login'}}Log In{{/link-to}}</li>
     <li>{{#link-to 'signup'}}Sign Up{{/link-to}}</li>
   {{/if}}
@@ -15,22 +18,9 @@
 
     <div class="panel-body" style="background-color: #FEFFFF;">
       <ul>
-  {{#each-in session.session as |category products|}}
-    <li>{{category}}:
-      <ul>
-        {{#each-in products as |a product|}}
-          <li>{{a}} -> {{product}}</li>
-        {{/each-in}}
-      </ul>
-    </li>
-  {{/each-in}}
-  session.data.authenticated.username={{session.data.authenticated.username}}
-</ul>
-      <ul>
         <li>
-          <strong>Session is authenticated?</strong>  {{session.isAuthenticated}} {{session.session.isAuthenticated}} {{session.session.authenticated.authenticator}}
+          <strong>Session is authenticated?</strong>  {{session.isAuthenticated}}
         </li>
-
         <li>
           <strong>Session Contents:</strong>
             <p style="word-wrap: break-word;">{{session-object-formatter session.data.authenticated}}</p>
@@ -38,8 +28,6 @@
       </ul>
     </div>
   </div>
-
-
-</div>
   {{outlet}}
+</div>
 

@@ -9,13 +9,11 @@ export default Service.extend({
 
   loadCurrentUser() {
     return new RSVP.Promise((resolve, reject) => {
-      window.console.log('loadCurrentUser: ', this.get('session'))
       const token = this.get('session.data.authenticated.token');
-      window.console.log('token: ', token)
       if (isEmpty(token)) {
         resolve()
       } else {
-        return this.get('store').findRecord('user', 'current-user').then((user) => {
+        return this.get('store').queryRecord('user', {me: true}, token).then((user) => {
           this.set('account', user);
           resolve();
         }, reject);
