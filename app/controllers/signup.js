@@ -7,7 +7,8 @@ export default Controller.extend({
   actions: {
     save(user){
       const _this = this
-      user.save().then(()=>{
+      user.save()
+      .then(()=>{
         const credentials = {identification: user.get('email'), password: user.get('password')};
         const authenticator = 'authenticator:jwt';
 
@@ -17,9 +18,7 @@ export default Controller.extend({
         });
       }).catch((adapterError) => {
         if (adapterError.errors) {
-          _this.set('errorMessage', adapterError.errors)
-        } else {
-          _this.set('errorMessage', [{detail: adapterError.statusText}]);
+          this.set('errorMessage', adapterError.errors)
         }
       })
     }
