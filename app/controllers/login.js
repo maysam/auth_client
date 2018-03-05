@@ -10,7 +10,7 @@ export default Controller.extend({
       const _this = this
       const loginToFacebook = function() {
         _this.get('fb')
-        .login("public_profile,email,name")
+        .login('email')
         .then(processFacebookLogin)
         .catch(function(error){
           if(error.statusText) {
